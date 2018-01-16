@@ -11,9 +11,10 @@ using TimiTDD.Data;
 namespace TimiTDD.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180115141406_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,30 +129,6 @@ namespace TimiTDD.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("TimiTDD.Models.AbsenceCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AbsenceReason");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AbsenceCategory");
-                });
-
-            modelBuilder.Entity("TimiTDD.Models.ActivityType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Activity");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ActivityType");
-                });
-
             modelBuilder.Entity("TimiTDD.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -221,120 +198,6 @@ namespace TimiTDD.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("TimiTDD.Models.Client", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Addr");
-
-                    b.Property<string>("City");
-
-                    b.Property<string>("Email");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Org");
-
-                    b.Property<string>("ZIP");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Client");
-                });
-
-            modelBuilder.Entity("TimiTDD.Models.Project", b =>
-                {
-                    b.Property<int>("ProjectId");
-
-                    b.Property<DateTime>("EndDate");
-
-                    b.Property<double>("EstimateAssembly");
-
-                    b.Property<double>("EstimateExternal");
-
-                    b.Property<double>("EstimateGarage");
-
-                    b.Property<double>("EstimateMasonry");
-
-                    b.Property<double>("EstimateOther");
-
-                    b.Property<double>("EstimatePlating");
-
-                    b.Property<double>("EstimateStender");
-
-                    b.Property<double>("EstimateStructural");
-
-                    b.Property<double>("EstimateTile");
-
-                    b.Property<double>("EstimatefinalisingWork");
-
-                    b.Property<string>("ProjectName");
-
-                    b.Property<DateTime>("StartDate");
-
-                    b.HasKey("ProjectId");
-
-                    b.ToTable("Project");
-                });
-
-            modelBuilder.Entity("TimiTDD.Models.WorkCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("WorkPreformed");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("WorkCategory");
-                });
-
-            modelBuilder.Entity("TimiTDD.Models.WorkParticipation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("AbsenceId");
-
-                    b.Property<double>("Break");
-
-                    b.Property<int?>("ClientId");
-
-                    b.Property<string>("Comment");
-
-                    b.Property<DateTime>("DateTimeEnd");
-
-                    b.Property<DateTime>("DateTimeStart");
-
-                    b.Property<double>("Hours");
-
-                    b.Property<int?>("ProjectId");
-
-                    b.Property<bool>("SessionState");
-
-                    b.Property<string>("UIdId");
-
-                    b.Property<string>("UserId")
-                        .IsRequired();
-
-                    b.Property<int?>("WorkCategoryId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AbsenceId");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("UIdId");
-
-                    b.HasIndex("WorkCategoryId");
-
-                    b.ToTable("WorkParticipation");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -378,29 +241,6 @@ namespace TimiTDD.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("TimiTDD.Models.WorkParticipation", b =>
-                {
-                    b.HasOne("TimiTDD.Models.AbsenceCategory", "AId")
-                        .WithMany()
-                        .HasForeignKey("AbsenceId");
-
-                    b.HasOne("TimiTDD.Models.Client", "CId")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
-
-                    b.HasOne("TimiTDD.Models.Project", "PId")
-                        .WithMany()
-                        .HasForeignKey("ProjectId");
-
-                    b.HasOne("TimiTDD.Models.ApplicationUser", "UId")
-                        .WithMany()
-                        .HasForeignKey("UIdId");
-
-                    b.HasOne("TimiTDD.Models.WorkCategory", "WCId")
-                        .WithMany()
-                        .HasForeignKey("WorkCategoryId");
                 });
 #pragma warning restore 612, 618
         }

@@ -29,7 +29,7 @@ namespace TimiTDD
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -53,12 +53,23 @@ namespace TimiTDD
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            // enables support for serving static content from the wwwroot folder
             app.UseStaticFiles();
+
+            // Adds a simple message HTTP responses that would not otherwise have a body, such as 404 - not Found responses.
+            app.UseStatusCodePages();
+
 
             app.UseAuthentication();
 
-            app.UseMvc(routes =>
-            {
+            //Tells MVC that it should send requests that arrive for the root URL of the application
+            //to the Index action method in the HomeController class. 
+            app.UseMvc(routes => {
+
+                routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
