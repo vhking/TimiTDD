@@ -34,6 +34,11 @@ namespace TimiTDD.Models
         [ForeignKey("Id")]
         public string UserId { get; set; }
         public ApplicationUser UId { get; set; }
+        
+        [ForeignKey("ATId")]
+        [Display(Name = "Aktivitet type")]
+        public int? ActivityTypeId { get; set; }
+        public ActivityType ATId { get; set; }
 
         [ForeignKey("WCId")]
         [Display(Name = "Arbeid utført")]

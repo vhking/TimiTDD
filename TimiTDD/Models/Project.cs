@@ -29,7 +29,7 @@ namespace TimiTDD.Models
         [Display(Name = "Iso og stendr.")]
         public double EstimateStender { get; set; }
         [Display(Name = "Sluttarb.")]
-        public double EstimatefinalisingWork { get; set; }
+        public double EstimateFinalisingWork { get; set; }
         [Display(Name = "Car/gar")]
         public double EstimateGarage { get; set; }
         [Display(Name = "Montering")]
