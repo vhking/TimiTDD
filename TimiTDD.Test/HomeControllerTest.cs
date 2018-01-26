@@ -1,8 +1,8 @@
 using NUnit.Framework;
 
-namespace Tests
+namespace TimiTDD
 {
-    public class Tests
+    public class HomeControllerTest
     {
         [SetUp]
         public void Setup()
@@ -10,9 +10,9 @@ namespace Tests
         }
 
         [Test]
-        public void Test1()
+        public void IndexView_RoleCheck_ReturnsTrue()
         {
-            Assert.Pass();
+           
         }
     }
 }
