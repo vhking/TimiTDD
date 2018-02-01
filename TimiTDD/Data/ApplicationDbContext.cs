@@ -1,7 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TimiTDD.Models;
@@ -14,14 +10,13 @@ namespace TimiTDD.Data
             : base(options)
         {
         }
+        
         public DbSet<WorkParticipation> WorkParticipation { get; set; }
         public DbSet<Project> Project { get; set; }
         public DbSet<Client> Client { get; set; }
         public DbSet<ActivityType> ActivityType { get; set; }
         public DbSet<AbsenceCategory> AbsenceCategory { get; set; }
         public DbSet<WorkCategory> WorkCategory { get; set; }
-
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -34,3 +29,4 @@ namespace TimiTDD.Data
 
     }
 }
+

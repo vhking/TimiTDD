@@ -1,12 +1,13 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace TimiTDD.Models
+namespace TimiTDD.Models.AccountViewModels
 {
-    // Add profile data for application users by adding properties to the ApplicationUser class
-    public class ApplicationUser : IdentityUser
+    public class EditUserViewModel
     {
-         // Add profile data for application users by adding properties to the ApplicationUser class
+        public string Id { get; set; }
+
         [Required(ErrorMessage = "Ansatt Id må fylles inn")]
         [Display(Name = "Ansatt Id")]
         public int UserId { get; set; }
@@ -31,5 +32,15 @@ namespace TimiTDD.Models
         [StringLength(255)]
         [Display(Name = "Stilling")]
         public string Title { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "E-Post")]
+        public string UserName { get; set; }
+
+
+        public List<SelectListItem> Roles { get; set; }
+        public string RoleId { get; set; }
     }
+    
 }

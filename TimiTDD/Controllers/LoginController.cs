@@ -6,24 +6,24 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TimiTDD.Models;
-using TimiTDD.Models.AccountViewModel;
+using TimiTDD.Models.AccountViewModels;
 using TimiTDD.Services;
 
 namespace TimiTDD.Controllers
 {
-    class LoginController : Controller
+    public class LoginController : Controller
     {
-        private  UserManager<ApplicationUser> _userManager;
-        private  RoleManager<ApplicationRole> _roleManager;
-        private  SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailSender _emailSender;
-        private readonly ILogger _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private IEmailSender _emailSender;
+        private ILogger _logger;
 
-
-        LoginController( UserManager<ApplicationUser> userManager,
+        public LoginController(
+            UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender,
+            IEmailSender emailSender,            
             ILogger<LoginController> logger)
         {
             _userManager = userManager;
@@ -32,12 +32,13 @@ namespace TimiTDD.Controllers
             _emailSender = emailSender;
             _logger = logger;
         }
-        
-        [TempData]
-        public string ErrorMessage { get; set; }
-       
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         [HttpGet]
-         public async Task<IActionResult> Login()
+        public async Task<IActionResult> Login()
         {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -50,33 +51,35 @@ namespace TimiTDD.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = _signInManager.PasswordSignInAsync(loginViewModel.UserName, 
+                var result = _signInManager.PasswordSignInAsync(loginViewModel.UserName,
                     loginViewModel.Password, loginViewModel.RememberMe, lockoutOnFailure: false).Result;
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByNameAsync(loginViewModel.UserName);
                     var roles = await _userManager.GetRolesAsync(user);
 
-                    if (roles.Contains("Tømrer"))                    {
-                        
+                    if (roles.Contains("User"))
+                    {
+
                         return RedirectToAction("Index", "Work", new { area = "User" });
                     }
-                    if (roles.Contains("Administrasjon"))
+                    if (roles.Contains("Admin"))
                     {
-                       
+
                         return RedirectToAction("Index", "Home", new { area = "Admin" });
-                    }                    
+                    }
                 }
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning("User account locked out.");
                     return RedirectToAction(nameof(Lockout));
-                }else
+                }
+                else
                 {
                     ModelState.AddModelError("", "Feil brukernavn eller passord");
                     return View(loginViewModel);
                 }
-                
+
             }
 
             return View(loginViewModel);
@@ -94,10 +97,10 @@ namespace TimiTDD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-             await _signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
             return RedirectToAction("Login");
-            
+
         }
 
         //TODO: move to admin folder
@@ -220,6 +223,7 @@ namespace TimiTDD.Controllers
         }
 
         #endregion
-
     }
+
+    
 }
