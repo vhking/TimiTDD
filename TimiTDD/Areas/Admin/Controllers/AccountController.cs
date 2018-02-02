@@ -37,6 +37,7 @@ namespace TimiTDD.Areas.Admin.Controllers
                     UserId = u.UserId,
                     Name = u.Name,
                     UserName = u.UserName
+                    
 
                 }).ToList();
                 return View(model);
