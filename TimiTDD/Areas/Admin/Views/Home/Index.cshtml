@@ -1,0 +1,26 @@
+<style>
+    .image2 {
+        height: auto;
+        width: 400px;
+    }
+</style>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+
+<div class="jumbotron">
+    <div align="center" class="row">
+        <h1>Timí</h1>
+        <p class="lead">TODO gi et innblikk til inforamsjoen tilgjengelig</p>
+        <P>1. Vis prosjekter det aktivt blir jobbet med</P>
+        <p>2. En liste over tømrere som ligger godt ann i sine prosjekter - timer brukt vs timer forventet</p>
+        <p>3. Annen innformasjon som kan være av interesse for administrasjonen.....</p>
+             
+
+
+        <div class="text-center lead">
+            <h3 id="greeting"></h3>
+            <h3>@UserManager.GetUserName(User)</h3>
+        </div>
+       
+    </div>
+</div>

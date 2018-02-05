@@ -195,7 +195,8 @@ namespace TimiTDD.Areas.Admin.Controllers
         //delete user
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(string id, IFormCollection form)
+        [ActionName("Delete")]
+        public async Task<IActionResult> DeleteUser(string id)
         {
             if (!String.IsNullOrEmpty(id))
             {
