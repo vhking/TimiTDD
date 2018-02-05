@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TimiTDD.Models
 {
-    class WorkParticipation
+    public class WorkParticipation
     {
         [Key]
         public int Id { get; set; }
