@@ -23,7 +23,7 @@ namespace TimiTDD.Models
         [ForeignKey("CId")]
         [Display(Name = "Kleint")]
         public int? ClientId { get; set; }
-        public Client  CId { get; set; }
+        public Client CId { get; set; }
         
         [ForeignKey("PId")]
         [Display(Name = "Prosjekt id")]

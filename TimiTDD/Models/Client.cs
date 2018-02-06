@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TimiTDD.Models
 {
-    class Client
+    public class Client
     {
         [Key]
         [Required]

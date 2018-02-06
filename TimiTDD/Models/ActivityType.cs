@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TimiTDD.Models
 {
-    class ActivityType
+    public class ActivityType
     {
         [Key]
         [Display(Name = "Aktivites ID")]

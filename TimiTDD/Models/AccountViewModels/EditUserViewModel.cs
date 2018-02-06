@@ -37,8 +37,6 @@ namespace TimiTDD.Models.AccountViewModels
         [EmailAddress]
         [Display(Name = "E-Post")]
         public string UserName { get; set; }
-
-
         public List<SelectListItem> Roles { get; set; }
         public string RoleId { get; set; }
     }

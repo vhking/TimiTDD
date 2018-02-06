@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TimiTDD.Data;
 using TimiTDD.Models;
+using TimiTDD.Models.EFRepository;
+using TimiTDD.Models.IRepository;
 using TimiTDD.Services;
 
 namespace TimiTDD
@@ -30,9 +32,13 @@ namespace TimiTDD
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            // Add application services.
+            // Add application services.         
             services.AddTransient<IEmailSender, EmailSender>();
 
+            //Add dependency injection
+            //TODO: Find out what scope is best for a datbase connecntion
+            services.AddTransient<IGenericRepository<WorkParticipation>, EFWorkParticipationRepository>();
+            //services.AddTransient<IGenericRepository<Project>, EFProjectRepository>();
 
             services.AddMvc();
 

@@ -1,23 +1,31 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using TimiTDD.Models;
+using TimiTDD.Models.IRepository;
 
 namespace TimiTDD.Areas.User.Controllers
 {
-    public class WorkController : Controller
+    class WorkController : Controller
     {
         private readonly IGenericRepository<WorkParticipation> _genericWorkRepository;
         private readonly IGenericRepository<Project> _genericProjectRepository;
         private readonly IGenericRepository<WorkCategory> _genericWorkCategoryRepository;
-        private readonly IGenericRepository<Contractor> _genericContractorRepository;
-      
+        private readonly IGenericRepository<Client> _genericContractorRepository;      
         private readonly UserManager<ApplicationUser> _userManager;
-        private int wId;
+        
+        // int wId;
 
         public WorkController(
             UserManager<ApplicationUser> usermanager,
             IGenericRepository<WorkParticipation> genericWorkRepository,
             IGenericRepository<Project> genericProjectRepository,
             IGenericRepository<WorkCategory> genericWorkCategoryRepository,
-            IGenericRepository<Contractor> genericContractorRepository)
+            IGenericRepository<Client> genericContractorRepository)
         {            
             _userManager = usermanager;
             _genericWorkRepository = genericWorkRepository;
@@ -34,12 +42,16 @@ namespace TimiTDD.Areas.User.Controllers
             var user = await GetCurrentUserAsync();
             var userId = user?.Id;
                      
-
-            if (_genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.ActiveSession == true) != null)
+            // Checks if the user are in a active session
+            // Sends them to te session if they are 
+            // Sends them to the manin page if they aren't
+            if (_genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.SessionState == true) != null)
             {
-                wId = _genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.ActiveSession == true).Max(w => w.WPId);
-                var workParticipation = _genericWorkRepository.Get(wId);
-                if (wId != 0 && workParticipation.ProjectId == null && workParticipation.DateTimeOut == null)
+                // Gets the users latest active session
+                var workId = _genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.SessionState == true).Max(w => w.Id);
+                var workParticipation = _genericWorkRepository.Get(workId);
+                //Makes sure to pick a work session that have key fields as Null
+                if (workId != 0 && workParticipation.ProjectId == null && workParticipation.DateTimeEnd == null)
                 {
                     return RedirectToAction("CheckIn");
                 }
@@ -55,16 +67,17 @@ namespace TimiTDD.Areas.User.Controllers
         public IActionResult Index(WorkParticipation workParticipation)
         {   
 
-            //Insert new data to database
+            //Starts a new work session
             if (Request.Form["BtnStart"] != String.IsNullOrEmpty(Request.Form["BtnStart"]))
             {
-                workParticipation.ActiveSession = true;
-                workParticipation.DateTimeIn = DateTime.Now;
+                workParticipation.SessionState = true;
+                workParticipation.DateTimeStart = DateTime.Now;
                 _genericWorkRepository.Add(workParticipation);
                 return RedirectToAction("CheckIn");
             }
-            else
+            else{
                 return View();
+            }
            
         }
 
@@ -73,13 +86,10 @@ namespace TimiTDD.Areas.User.Controllers
         {
             ApplicationUser user = await GetCurrentUserAsync();
             var userId = user?.Id;
-
-            wId = _genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.ActiveSession == true).Max(wp => wp.WPId);
-            if (wId == 0)
-            {
-                return NotFound();
-            }
-            var workParticipation = _genericWorkRepository.Get(wId);
+            // gets the users latest session
+            var workId = _genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.SessionState == true).Max(wp => wp.Id);
+            
+            var workParticipation = _genericWorkRepository.Get(workId);
 
             if (workParticipation == null)
             {
@@ -94,7 +104,7 @@ namespace TimiTDD.Areas.User.Controllers
         public IActionResult ProjectWork(int id)
         {
            
-            // list project by id andname and puts it in a ViewBag
+            // list project by id and name and puts it in a ViewBag
             ViewBag.ProjectId = new SelectList(_genericProjectRepository.GetAll, "PId", "Detail");
             // list workcategories by ide and name and puts it in a ViewBag
             ViewBag.WorkCategoryId = new SelectList(_genericWorkCategoryRepository.GetAll, "WCId", "WCDetail");
@@ -121,6 +131,7 @@ namespace TimiTDD.Areas.User.Controllers
 
         }
 
+        // posts the rest of the infromation about the work session in a project
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ProjectWork(WorkParticipation workParticipation)
@@ -132,7 +143,8 @@ namespace TimiTDD.Areas.User.Controllers
             {
                 if (ModelState.IsValid)
                 {                   
-                    workParticipation.ActiveSession = false;
+                    // Ends the work session
+                    workParticipation.SessionState = false;
                     _genericWorkRepository.Update(workParticipation);
                     return RedirectToAction("ProjectVerification");
                 }
@@ -185,13 +197,13 @@ namespace TimiTDD.Areas.User.Controllers
         { 
 
             ViewBag.ProjectId = new SelectList(_genericProjectRepository.GetAll, "PId", "Detail", workParticipation.ProjectId);            
-            ViewBag.ContracterId = new SelectList(_genericContractorRepository.GetAll, "CId", "CName", workParticipation.ContracterId);
+            ViewBag.ContracterId = new SelectList(_genericContractorRepository.GetAll, "CId", "CName", workParticipation.ClientId);
 
             try
             {
                 if (ModelState.IsValid)
                 {
-                    workParticipation.ActiveSession = false;
+                    workParticipation.SessionState = false;
                     _genericWorkRepository.Update(workParticipation);
                     return RedirectToAction("HourWorkVerification");
                 }
@@ -213,12 +225,12 @@ namespace TimiTDD.Areas.User.Controllers
             ApplicationUser user = await GetCurrentUserAsync();
             var userId = user?.Id;
 
-            wId = _genericWorkRepository.GetAll.Where(u => u.UserId == userId).Max(w => w.WPId);
-            if (wId == 0)
+            var workId = _genericWorkRepository.GetAll.Where(u => u.UserId == userId).Max(w => w.Id);
+            if (workId == 0)
             {
                 return NotFound();
             }
-            WorkParticipation workParticipation = _genericWorkRepository.Get(wId);
+            WorkParticipation workParticipation = _genericWorkRepository.Get(workId);
 
             if (workParticipation == null)
             {
@@ -234,13 +246,13 @@ namespace TimiTDD.Areas.User.Controllers
             ApplicationUser user = await GetCurrentUserAsync();
             var userId = user?.Id;
 
-            wId = _genericWorkRepository.GetAll.Where(u => u.UserId == userId).Max(w => w.WPId);
-            if (wId == 0)
+            var workId = _genericWorkRepository.GetAll.Where(u => u.UserId == userId).Max(w => w.Id);
+            if (workId == 0)
             {
                 return NotFound();
             }
 
-            WorkParticipation workParticipation = _genericWorkRepository.Get(wId);
+            WorkParticipation workParticipation = _genericWorkRepository.Get(workId);
 
             if (workParticipation == null)
             {
@@ -268,9 +280,6 @@ namespace TimiTDD.Areas.User.Controllers
             return userId.ToString();
 
         }
-
-       
-
 
         #endregion
     }

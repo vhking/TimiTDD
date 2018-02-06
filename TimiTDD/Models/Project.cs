@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TimiTDD.Models
 {
-    class Project
+    public class Project
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
