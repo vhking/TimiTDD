@@ -10,8 +10,10 @@ using TimiTDD.Models.IRepository;
 
 namespace TimiTDD.Areas.User.Controllers
 {
-    class WorkController : Controller
+    [Area("User")]
+    public class WorkController : Controller
     {
+        
         private readonly IGenericRepository<WorkParticipation> _genericWorkRepository;
         private readonly IGenericRepository<Project> _genericProjectRepository;
         private readonly IGenericRepository<WorkCategory> _genericWorkCategoryRepository;

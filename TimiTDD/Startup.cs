@@ -24,7 +24,8 @@ namespace TimiTDD
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddMvc();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -38,9 +39,10 @@ namespace TimiTDD
             //Add dependency injection
             //TODO: Find out what scope is best for a datbase connecntion
             services.AddTransient<IGenericRepository<WorkParticipation>, EFWorkParticipationRepository>();
-            //services.AddTransient<IGenericRepository<Project>, EFProjectRepository>();
+            services.AddTransient<IGenericRepository<Project>, EFProjectRepository>();
+            services.AddTransient<IGenericRepository<Client>, EFCleintRepository>();
 
-            services.AddMvc();
+           
 
         }
 
@@ -74,6 +76,7 @@ namespace TimiTDD
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                    
             });
         }
     }
