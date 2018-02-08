@@ -8,8 +8,14 @@ namespace TimiTDD.Models
         [Display(Name = "Arbeid ID")]   
         public int Id { get; set; }
         [Display(Name="Arbeid utført")]
-        public string WorkPreformed { get; set; }
-
+        public string WorkPerformed { get; set; }
+        public string WorkCategoryIdAndWorkPreformed
+        {
+            get
+            {
+                return this.Id + " . " + this.WorkPerformed;
+            }
+        }
         
     }
 }

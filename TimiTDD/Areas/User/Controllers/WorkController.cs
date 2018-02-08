@@ -107,9 +107,9 @@ namespace TimiTDD.Areas.User.Controllers
         {
            
             // list project by id and name and puts it in a ViewBag
-            ViewBag.ProjectId = new SelectList(_genericProjectRepository.GetAll, "PId", "Detail");
+            ViewBag.ProjectId = new SelectList(_genericProjectRepository.GetAll, "ProjectId", "ProjectIdAndName");
             // list workcategories by ide and name and puts it in a ViewBag
-            ViewBag.WorkCategoryId = new SelectList(_genericWorkCategoryRepository.GetAll, "WCId", "WCDetail");
+            ViewBag.WorkCategoryId = new SelectList(_genericWorkCategoryRepository.GetAll, "Id", "WorkCategoryIdAndWorkPreformed");
             // makes list of values an put them in a ViewBag
             ViewBag.WPBreak = new SelectList(
                 new List<SelectListItem> {
@@ -138,8 +138,8 @@ namespace TimiTDD.Areas.User.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult ProjectWork(WorkParticipation workParticipation)
         {
-            ViewBag.ProjectId = new SelectList(_genericProjectRepository.GetAll, "PId", "Detail", workParticipation.ProjectId);
-            ViewBag.WorkCategoryId = new SelectList(_genericWorkCategoryRepository.GetAll, "WCId", "WCDetail", workParticipation.WorkCategoryId);
+            ViewBag.ProjectId = new SelectList(_genericProjectRepository.GetAll, "ProjectId", "ProjectIdAndName", workParticipation.ProjectId);
+            ViewBag.WorkCategoryId = new SelectList(_genericWorkCategoryRepository.GetAll, "Id", "WorkCategoryIdAndWorkPreformed", workParticipation.WorkCategoryId);
 
             try
             {
@@ -166,9 +166,9 @@ namespace TimiTDD.Areas.User.Controllers
         public IActionResult HourWork(int id)
         {           
             // gets list of project and represent it with PId and PName
-            ViewBag.ProjectId = new SelectList(_genericProjectRepository.GetAll, "PId", "Detail");
+            ViewBag.ProjectId = new SelectList(_genericProjectRepository.GetAll, "ProjectId", "ProjectIdAndName");
             // Gets list of contractor and represnt it with CId and CName
-            ViewBag.ContracterId = new SelectList(_genericContractorRepository.GetAll, "CId", "CName");
+            ViewBag.ClientId = new SelectList(_genericContractorRepository.GetAll, "Id", "Name");
             // makes list of values and put them in a ViewBag
             ViewBag.Break = new SelectList(
                new List<SelectListItem> {
@@ -198,8 +198,8 @@ namespace TimiTDD.Areas.User.Controllers
         public IActionResult HourWork(WorkParticipation workParticipation)
         { 
 
-            ViewBag.ProjectId = new SelectList(_genericProjectRepository.GetAll, "PId", "Detail", workParticipation.ProjectId);            
-            ViewBag.ContracterId = new SelectList(_genericContractorRepository.GetAll, "CId", "CName", workParticipation.ClientId);
+            ViewBag.ProjectId = new SelectList(_genericProjectRepository.GetAll, "ProjectId", "ProjectIdAndName", workParticipation.ProjectId);            
+            ViewBag.ClientId = new SelectList(_genericContractorRepository.GetAll, "Id", "Name", workParticipation.ClientId);
 
             try
             {
@@ -222,7 +222,7 @@ namespace TimiTDD.Areas.User.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ProjectVerification()
+        public async Task<IActionResult> ProjectWorkVarification()
         {
             ApplicationUser user = await GetCurrentUserAsync();
             var userId = user?.Id;

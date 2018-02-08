@@ -36,5 +36,13 @@ namespace TimiTDD.Models
         public double EstimateAssembly { get; set; }
         [Display(Name = "Annet")]
         public double EstimateOther { get; set; }
+
+        public string ProjectIdAndName
+        {
+            get
+            {
+                return "Prosjekt " + this.ProjectId + " . " + this.ProjectName;
+            }
+        }
     }
 }
