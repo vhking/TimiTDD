@@ -170,7 +170,7 @@ namespace TimiTDD.Areas.User.Controllers
             // Gets list of contractor and represnt it with CId and CName
             ViewBag.ContracterId = new SelectList(_genericContractorRepository.GetAll, "CId", "CName");
             // makes list of values and put them in a ViewBag
-            ViewBag.WPBreak = new SelectList(
+            ViewBag.Break = new SelectList(
                new List<SelectListItem> {
                       new SelectListItem { Text = "Ingen pause", Value = "0" },
                  new SelectListItem { Text = "15 minutt", Value = "0,25" },
