@@ -37,7 +37,7 @@ namespace TimiTDD.Models
         
         [ForeignKey("ATId")]
         [Display(Name = "Aktivitet type")]
-        public int? ActivityTypeId { get; set; }
+        public int ActivityTypeId { get; set; }
         public ActivityType ATId { get; set; }
 
         [ForeignKey("WCId")]
