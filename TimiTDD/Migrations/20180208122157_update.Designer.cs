@@ -11,9 +11,10 @@ using TimiTDD.Data;
 namespace TimiTDD.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180208122157_update")]
+    partial class update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -301,6 +302,8 @@ namespace TimiTDD.Migrations
 
                     b.Property<int>("ActivityTypeId");
 
+                    b.Property<double>("Break");
+
                     b.Property<int?>("ClientId");
 
                     b.Property<string>("Comment");
@@ -319,8 +322,6 @@ namespace TimiTDD.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired();
-
-                    b.Property<double>("WorkBreak");
 
                     b.Property<int?>("WorkCategoryId");
 

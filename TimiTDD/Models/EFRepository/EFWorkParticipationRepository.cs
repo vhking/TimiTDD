@@ -52,7 +52,7 @@ namespace TimiTDD.Models.EFRepository
                     dbEntry.DateTimeStart = obj.DateTimeStart;
                     dbEntry.DateTimeEnd = obj.DateTimeEnd;
                     dbEntry.Hours = obj.Hours;
-                    dbEntry.Break = obj.Break;
+                    dbEntry.WorkBreak = obj.WorkBreak;
                     dbEntry.Comment = obj.Comment;
                     dbEntry.SessionState = obj.SessionState;
                     dbEntry.ClientId = obj.ClientId;

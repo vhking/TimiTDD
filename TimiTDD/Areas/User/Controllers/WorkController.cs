@@ -42,25 +42,28 @@ namespace TimiTDD.Areas.User.Controllers
         {
           
             var user = await GetCurrentUserAsync();
-            var userId = user?.Id;
-                     
-            // Checks if the user are in a active session
-            // Sends them to te session if they are 
-            // Sends them to the manin page if they aren't
-            if (_genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.SessionState == true) != null)
-            {
-                // Gets the users latest active session
-                var workId = _genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.SessionState == true).Max(w => w.Id);
-                var workParticipation = _genericWorkRepository.Get(workId);
-                //Makes sure to pick a work session that have key fields as Null
-                if (workId != 0 && workParticipation.ProjectId == null && workParticipation.DateTimeEnd == null)
+            var userId = user?.Id;                     
+                        
+            if (_genericWorkRepository.GetAll.Any())
+            {               
+                // Checks if the user are in a active session
+                // Sends them to te session if they are 
+                // Sends them to the manin page if they aren't
+                if (_genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.SessionState == true).Any())
                 {
-                    return RedirectToAction("CheckIn");
+                // Gets the users latest active session
+                    var workId = _genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.SessionState == true).Max(w => w.Id);
+                    var workParticipation = _genericWorkRepository.Get(workId);
+                    //Makes sure to pick a work session that have key fields as Null
+                    if (workId != 0 && workParticipation.ProjectId == null && workParticipation.DateTimeEnd == null)
+                    {
+                        return RedirectToAction("CheckIn");
+                    }
                 }
-            }
-            else
-            {
-                return View();
+                else
+                {
+                    return View();
+                }
             }
             return View();
         }

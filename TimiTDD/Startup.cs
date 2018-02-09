@@ -41,6 +41,8 @@ namespace TimiTDD
             services.AddTransient<IGenericRepository<WorkParticipation>, EFWorkParticipationRepository>();
             services.AddTransient<IGenericRepository<Project>, EFProjectRepository>();
             services.AddTransient<IGenericRepository<Client>, EFCleintRepository>();
+            services.AddTransient<IGenericRepository<WorkCategory>, EFWorkCategoryRepository>();
+            services.AddTransient<IGenericRepository<AbsenceCategory>, EFAbsenceRepository>();
 
            
 

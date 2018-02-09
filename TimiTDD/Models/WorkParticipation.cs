@@ -15,7 +15,7 @@ namespace TimiTDD.Models
         [Display(Name="Timer")]
         public double Hours { get; set; }
         [Display(Name="Pause")]
-        public double Break { get; set; }
+        public double WorkBreak { get; set; }
         [Display(Name="Kommentar")]
         public string Comment { get; set; }        
         public bool SessionState { get; set; } 
