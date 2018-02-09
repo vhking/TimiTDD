@@ -1,0 +1,19 @@
+
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_WorkParticipation_SessionTime]
+    ON [dbo].[WorkParticipation]
+    FOR UPDATE
+    AS
+		if(SELECT DateTimeEnd From WorkParticipation WHERE Id IN (SELECT DISTINCT Id FROM Inserted)) IS NULL		
+    BEGIN
+		UPDATE dbo.WorkParticipation
+		SET DateTimeEnd = GETDATE()
+		WHERE Id IN (SELECT DISTINCT Id FROM inserted)
+		BEGIN
+			UPDATE dbo.WorkParticipation
+			SET Hours = DATEDIFF(SS,DateTimeStart,DateTimeEnd)/3600.0 - WorkBreak
+			WHERE Id IN (SELECT DISTINCT Id FROM inserted)
+		END
+	END

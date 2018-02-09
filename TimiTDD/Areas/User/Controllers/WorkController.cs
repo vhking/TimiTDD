@@ -49,10 +49,10 @@ namespace TimiTDD.Areas.User.Controllers
                 // Checks if the user are in a active session
                 // Sends them to te session if they are 
                 // Sends them to the manin page if they aren't
-                if (_genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.SessionState == true).Any())
+                if (_genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.Session == true).Any())
                 {
                 // Gets the users latest active session
-                    var workId = _genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.SessionState == true).Max(w => w.Id);
+                    var workId = _genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.Session == true).Max(w => w.Id);
                     var workParticipation = _genericWorkRepository.Get(workId);
                     //Makes sure to pick a work session that have key fields as Null
                     if (workId != 0 && workParticipation.ProjectId == null && workParticipation.DateTimeEnd == null)
@@ -75,7 +75,7 @@ namespace TimiTDD.Areas.User.Controllers
             //Starts a new work session
             if (Request.Form["BtnStart"] != String.IsNullOrEmpty(Request.Form["BtnStart"]))
             {
-                workParticipation.SessionState = true;
+                workParticipation.Session = true;
                 workParticipation.DateTimeStart = DateTime.Now;
                 _genericWorkRepository.Add(workParticipation);
                 return RedirectToAction("CheckIn");
@@ -92,7 +92,7 @@ namespace TimiTDD.Areas.User.Controllers
             ApplicationUser user = await GetCurrentUserAsync();
             var userId = user?.Id;
             // gets the users latest session
-            var workId = _genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.SessionState == true).Max(wp => wp.Id);
+            var workId = _genericWorkRepository.GetAll.Where(u => u.UserId == userId && u.Session == true).Max(wp => wp.Id);
             
             var workParticipation = _genericWorkRepository.Get(workId);
 
@@ -149,7 +149,7 @@ namespace TimiTDD.Areas.User.Controllers
                 if (ModelState.IsValid)
                 {                   
                     // Ends the work session
-                    workParticipation.SessionState = false;
+                    workParticipation.Session = false;
                     _genericWorkRepository.Update(workParticipation);
                     return RedirectToAction("ProjectVerification");
                 }
@@ -208,7 +208,7 @@ namespace TimiTDD.Areas.User.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    workParticipation.SessionState = false;
+                    workParticipation.Session = false;
                     _genericWorkRepository.Update(workParticipation);
                     return RedirectToAction("HourWorkVerification");
                 }

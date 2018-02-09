@@ -18,7 +18,7 @@ namespace TimiTDD.Models
         public double WorkBreak { get; set; }
         [Display(Name="Kommentar")]
         public string Comment { get; set; }        
-        public bool SessionState { get; set; } 
+        public bool Session { get; set; } 
         
         [ForeignKey("CId")]
         [Display(Name = "Kleint")]
@@ -31,7 +31,7 @@ namespace TimiTDD.Models
         public Project PId { get; set; }
 
         [Required]
-        [ForeignKey("Id")]
+        [ForeignKey("UId")]
         public string UserId { get; set; }
         public ApplicationUser UId { get; set; }
         

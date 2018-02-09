@@ -54,7 +54,7 @@ namespace TimiTDD.Models.EFRepository
                     dbEntry.Hours = obj.Hours;
                     dbEntry.WorkBreak = obj.WorkBreak;
                     dbEntry.Comment = obj.Comment;
-                    dbEntry.SessionState = obj.SessionState;
+                    dbEntry.Session = obj.Session;
                     dbEntry.ClientId = obj.ClientId;
                     dbEntry.ProjectId = obj.ProjectId;
                     dbEntry.UserId = obj.UserId;
