@@ -13,7 +13,7 @@
 
         <h3>Prosjektarbeid</h3>
 
-        <div style="display:none;" id="dato">@Html.DisplayFor(model => model.DateTimeIn)</div>
+        <div style="display:none;" id="dato">@Html.DisplayFor(model => model.DateTimeStart)</div>
         <div class="clock-layout">
             <div class="clock btn-block">
                 <div class="time"></div>
@@ -67,9 +67,9 @@
                 <div class="modal-body">
                     <div class="alert alert-dismissable alert-info">Du er i ferd med å stemple ut. Velg Bekreft for å fullføre. Har du hatt pause i denne arbeidsøkten velger du dette under</div>
                     <div class="form-group">
-                        <label asp-for="Break" class="col-md-2 control-label"></label>
+                        <label asp-for="WorkBreak" class="col-md-2 control-label"></label>
                         <div class="col-md-10">
-                            <select asp-for="Break" asp-items="@ViewBag.Break" class="form-control"></select>
+                            <select asp-for="WorkBreak" asp-items="@ViewBag.Break" class="form-control"></select>
                         </div>
                     </div>
                 </div>

@@ -9,13 +9,13 @@ namespace TimiTDD.Models
         [Key]
         public int Id { get; set; }
         [Display(Name="Dato")]
-        public DateTime DateTimeStart { get; set; }
+        public DateTime? DateTimeStart { get; set; }
         [Display(Name="Dato")]
-        public DateTime DateTimeEnd { get; set; }
+        public DateTime? DateTimeEnd { get; set; }
         [Display(Name="Timer")]
-        public double Hours { get; set; }
+        public double? Hours { get; set; }
         [Display(Name="Pause")]
-        public double WorkBreak { get; set; }
+        public double? WorkBreak { get; set; }
         [Display(Name="Kommentar")]
         public string Comment { get; set; }        
         public bool Session { get; set; } 
@@ -37,7 +37,7 @@ namespace TimiTDD.Models
         
         [ForeignKey("ATId")]
         [Display(Name = "Aktivitet type")]
-        public int ActivityTypeId { get; set; }
+        public int? ActivityTypeId { get; set; }
         public ActivityType ATId { get; set; }
 
         [ForeignKey("WCId")]

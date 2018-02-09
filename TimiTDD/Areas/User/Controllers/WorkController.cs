@@ -114,7 +114,7 @@ namespace TimiTDD.Areas.User.Controllers
             // list workcategories by ide and name and puts it in a ViewBag
             ViewBag.WorkCategoryId = new SelectList(_genericWorkCategoryRepository.GetAll, "Id", "WorkCategoryIdAndWorkPreformed");
             // makes list of values an put them in a ViewBag
-            ViewBag.WPBreak = new SelectList(
+            ViewBag.Break = new SelectList(
                 new List<SelectListItem> {
                     new SelectListItem { Text = "Ingen pause", Value = "0" },
                  new SelectListItem { Text = "15 minutt -> 0,25", Value = "0,25" },

@@ -18,7 +18,8 @@ namespace TimiTDD.Models.EFRepository
         public void Add(WorkParticipation obj)
         {
             _context.WorkParticipation.Add(obj);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
+        
         }
 
         public WorkParticipation Delete(int id)
