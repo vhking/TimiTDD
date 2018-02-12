@@ -35,7 +35,7 @@ namespace TimiTDD.Models.EFRepository
 
         public WorkParticipation Get(int id)
         {
-            var dbEntry = _context.WorkParticipation.FirstOrDefault(wp => wp.Id == id);
+            var dbEntry = _context.WorkParticipation.Include(c=>c.CId).Include(a=>a.ATId).Include(w=>w.WCId).FirstOrDefault(wp => wp.Id == id);
 
                 return dbEntry;
         }
@@ -46,13 +46,13 @@ namespace TimiTDD.Models.EFRepository
             {
 
                 WorkParticipation dbEntry = _context.WorkParticipation
-                    .FirstOrDefault(p => p.Id == obj.Id);
+                    .SingleOrDefault(p => p.Id == obj.Id);
                 if (dbEntry != null)
                 {
                     dbEntry.Id = obj.Id;
-                    dbEntry.DateTimeStart = obj.DateTimeStart;
-                    dbEntry.DateTimeEnd = obj.DateTimeEnd;
-                    dbEntry.Hours = obj.Hours;
+                    // dbEntry.DateTimeStart = obj.DateTimeStart;
+                    // dbEntry.DateTimeEnd = obj.DateTimeEnd;
+                    // dbEntry.Hours = obj.Hours;
                     dbEntry.WorkBreak = obj.WorkBreak;
                     dbEntry.Comment = obj.Comment;
                     dbEntry.Session = obj.Session;
@@ -61,7 +61,7 @@ namespace TimiTDD.Models.EFRepository
                     dbEntry.UserId = obj.UserId;
                     dbEntry.WorkCategoryId = obj.WorkCategoryId;
                     dbEntry.ActivityTypeId = obj.ActivityTypeId;
-                    //dbEntry.Verified = workParticipation.Verified;
+                    
 
                 }
             }

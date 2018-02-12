@@ -26,8 +26,8 @@
             <label asp-for="ProjectId" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <select asp-for="ProjectId" asp-items="@ViewBag.ProjectId" class="form-control">
-                    <option>-- Velg prosjekt --</option>                    
-                </select>               
+                    <option>-- Velg prosjekt --</option>
+                </select>
                 <span asp-validation-for="ProjectId" class="text-danger"></span>
             </div>
         </div>
@@ -51,7 +51,7 @@
 
         <input asp-for="ActivityTypeId" value="1" style="display:none" />
         <input asp-for="UserId" class="form-control" style="display:none" value="@UserManager.GetUserId(User)" />
-        <input asp-for="DateTimeStart" style="display:none" value="@Model.DateTimeStart"/>
+        <!-- <input asp-for="DateTimeStart" style="display:none" value="@Model.DateTimeStart"/> -->
 
         <div class="btn-changes">
             <p><a class="btn btn-success btn-block" data-toggle="modal" data-target="#checkOut">Stemple ut</a></p>
@@ -81,7 +81,7 @@
         </div>
     </div>
 
-    @section scripts{       
+    @section scripts{
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#ProjectId').select2();

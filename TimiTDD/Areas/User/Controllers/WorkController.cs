@@ -58,6 +58,9 @@ namespace TimiTDD.Areas.User.Controllers
                     if (workId != 0 && workParticipation.ProjectId == null && workParticipation.DateTimeEnd == null)
                     {
                         return RedirectToAction("CheckIn");
+                    }else{
+
+                        return NotFound();
                     }
                 }
                 else
@@ -151,7 +154,7 @@ namespace TimiTDD.Areas.User.Controllers
                     // Ends the work session
                     workParticipation.Session = false;
                     _genericWorkRepository.Update(workParticipation);
-                    return RedirectToAction("ProjectVerification");
+                    return RedirectToAction("ProjectWorkVarification");
                 }
                 else
                 {
