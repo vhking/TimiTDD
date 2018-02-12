@@ -13,9 +13,9 @@ namespace TimiTDD.Models
         [Display(Name = "Prosjekt Navn")]
         public string ProjectName { get; set; }
         [Display(Name = "Start dato")]
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
         [Display(Name = "Slutt dato")]
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         [Display(Name = "Mur")]
         public double EstimateMasonry { get; set; }
         [Display(Name = "Flis")]
@@ -35,7 +35,7 @@ namespace TimiTDD.Models
         [Display(Name = "Montering")]
         public double EstimateAssembly { get; set; }
         [Display(Name = "Annet")]
-        public double EstimateOther { get; set; }
+        public double? EstimateOther { get; set; }
 
         public string ProjectIdAndName
         {
