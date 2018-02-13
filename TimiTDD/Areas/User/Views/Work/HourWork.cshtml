@@ -34,7 +34,7 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="CleintId" class="col-md-2 control-label"></label>
+            <label asp-for="ClientId" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <select asp-for="ClientId" asp-items="@ViewBag.ClientId" class="form-control">
                     <option>-- Velg kunde --</option>
@@ -50,10 +50,10 @@
             </div>
         </div>
 
-        <input asp-for="ActivityType" value="2" style="display:none" />
+        <input asp-for="ActivityTypeId" value="2" style="display:none" />
         <input asp-for="UserId" class="form-control" style="display:none" value="@UserManager.GetUserId(User)" />
         <input asp-for="WorkCategoryId" style="display:none" value="10" />
-        <input asp-for="DateTimeStart" style="display:none" value="@Model.DateTimeStart" />
+        <!-- <input asp-for="DateTimeStart" style="display:none" value="@Model.DateTimeStart" /> -->
 
         <div class="btn-changes">
             <p><a class="btn btn-success btn-block" data-toggle="modal" data-target="#checkOut">Stemple ut</a></p>
@@ -69,9 +69,9 @@
                 <div class="modal-body">
                     <div class="alert alert-dismissable alert-info">Du er i ferd med å stemple ut. Velg Bekreft for å fullføre. Har du hatt pause i denne arbeidsøkten velger du dette under</div>
                     <div class="form-group">
-                        <label asp-for="Break" class="col-md-2 control-label"></label>
+                        <label asp-for="WorkBreak" class="col-md-2 control-label"></label>
                         <div class="col-md-10">
-                            <select asp-for="Break" asp-items="@ViewBag.WPBreak" class="form-control"></select>
+                            <select asp-for="WorkBreak" asp-items="@ViewBag.Break" class="form-control"></select>
                         </div>
                     </div>
                 </div>
@@ -83,14 +83,12 @@
         </div>
     </div>
 
-</form>
-
-
-@section scripts{
-    <script type="text/javascript">
+    @section scripts{
+        <script type="text/javascript">
             $(document).ready(function () {
                 $('#ProjectId').select2();
             });
-    </script>
-}
+        </script>
+    }
 
+</form>
